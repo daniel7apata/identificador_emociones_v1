@@ -2,13 +2,15 @@ import os
 import cv2
 import time
 
-dataPath = 'C:/Users/Daniel/Desktop/itera_2'  # Asegúrate de definir tu ruta correcta
+dataPath = 'C:/Users/Daniel/Desktop/itera_3'  # Asegúrate de definir tu ruta correcta
 imagePaths = os.listdir(dataPath)
 
 face_recognizer = cv2.face.LBPHFaceRecognizer_create()
 face_recognizer.read("model.xml")
 
-cap = cv2.VideoCapture('dina_recopilacion_1.mp4')
+cap = cv2.VideoCapture('dina_recopilacion_2.mp4')
+total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+
 
 faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_frontalface_default.xml')
 
@@ -20,7 +22,13 @@ for folder in emotion_folders.values():
     if not os.path.exists(folder):
         os.makedirs(folder)
 
+frame_actual = 0
+
+
 while True:
+
+    frame_actual += 1
+
     ret, frame = cap.read()
     if not ret: break
 
@@ -43,7 +51,16 @@ while True:
 
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-    cv2.imshow('frame', frame)
+
+
+        progreso = f"{round(frame_actual/total_frames*100, 2)}%"
+        text_position = (frame.shape[1] - 100, frame.shape[0] - 20)
+        cv2.putText(frame, progreso, text_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 4, cv2.LINE_AA)
+        cv2.putText(frame, progreso, text_position, cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1, cv2.LINE_AA)
+
+
+  
+    cv2.imshow("frame", frame)
     k = cv2.waitKey(1)
     if k == 27: break
 

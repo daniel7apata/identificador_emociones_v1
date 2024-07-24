@@ -12,8 +12,8 @@ face_recognizer = cv2.face.LBPHFaceRecognizer_create()
 
 face_recognizer.read("model.xml")
 
-cap = cv2.VideoCapture(1,cv2.CAP_DSHOW)
-#cap = cv2.VideoCapture('dina_recopilacion_1.mp4')
+#cap = cv2.VideoCapture(1,cv2.CAP_DSHOW)
+cap = cv2.VideoCapture('dina_recopilacion_1.mp4')
 
 faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_frontalface_default.xml')
 
