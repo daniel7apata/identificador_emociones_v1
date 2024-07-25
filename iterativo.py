@@ -2,7 +2,7 @@ import os
 import cv2
 import time
 
-dataPath = 'C:/Users/Daniel/Desktop/itera_3'  # Asegúrate de definir tu ruta correcta
+dataPath = 'C:/Users/Daniel/Desktop/resultados_iteracion'  # Asegúrate de definir tu ruta correcta
 imagePaths = os.listdir(dataPath)
 
 face_recognizer = cv2.face.LBPHFaceRecognizer_create()
@@ -14,7 +14,7 @@ total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
 
 faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_frontalface_default.xml')
 
-emotions = ['Alegria','Desagrado','Enojo','Miedo','Neutral','Sorpresa','Tristeza',]  # Ejemplo de emociones
+emotions = ['Alegria','Desagrado','Enojo','Miedo','Neutral','Sorpresa','Tristeza'] 
 emotion_folders = {emotion: os.path.join(dataPath, emotion) for emotion in emotions}
 
 # Crear carpetas para cada emoción si no existen

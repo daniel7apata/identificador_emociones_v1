@@ -4,7 +4,9 @@ import threading
 from collections import deque
 import time
 
-
+fotogramas_capturados = 'C:/Users/Daniel/Desktop/fotogramas_capturados'  # Donde se guardan las imágenes de emociones
+imagePaths = os.listdir(fotogramas_capturados)
+emotions = ['Alegria','Desagrado','Enojo','Miedo','Neutral','Sorpresa','Tristeza'] 
 
 class FrameBuffer:
     def __init__(self):
@@ -30,6 +32,7 @@ def capture_frames(cap, buffer):
 
 dataPath = "C:/Users/Daniel/Desktop/datos_entrenamiento"
 imagePaths = os.listdir(dataPath)
+
 
 face_recognizer = cv2.face.LBPHFaceRecognizer_create()
 face_recognizer.read("model.xml")
@@ -72,7 +75,7 @@ while True:
         rostro = cv2.resize(rostro, (150, 150), interpolation=cv2.INTER_CUBIC)
         emocion_detectada = face_recognizer.predict(rostro)
 
-        
+
 
         #cv2.putText(frame,'{}'.format(emocion_detectada),(x,y-5),1,1.3,(255,255,0),1,cv2.LINE_AA)
           
@@ -88,9 +91,14 @@ while True:
         elapsed_time = time.time() - start_time
         minutes = int(elapsed_time // 60)
         seconds = int(elapsed_time % 60)
+        milliseconds = int((elapsed_time % 1) * 1000)
 
         # Formateo del texto del tiempo transcurrido
         time_text = '{:02d}:{:02d}'.format(minutes, seconds)
+
+        # Guardar imagen en la carpeta correspondiente
+        img_name = f"{'({:02d}.{:02d}.{:03d})'.format(minutes, seconds, milliseconds)}_{imagePaths[emocion_detectada[0]]}.jpg"
+        cv2.imwrite(os.path.join(fotogramas_capturados, img_name), rostro)
 
         # Posición para el texto en la esquina inferior derecha
         # Ajusta '20' y '30' para cambiar la distancia desde el borde si es necesario
