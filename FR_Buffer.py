@@ -6,7 +6,7 @@ import time
 
 fotogramas_capturados = 'C:/Users/Daniel/Desktop/fotogramas_capturados'  # Donde se guardan las imágenes de emociones
 imagePaths = os.listdir(fotogramas_capturados)
-emotions = ['Alegria','Desagrado','Desden','Enojo','Miedo','Sorpresa','Tristeza'] 
+emotions = ['Alegria','Desagrado','Neutral','Enojo','Miedo','Sorpresa','Tristeza'] 
 
 class FrameBuffer:
     def __init__(self):
@@ -131,7 +131,7 @@ cantidad_alegria = sum("Alegria" in elemento for elemento in emociones_detectada
 cantidad_desagrado = sum("Desagrado" in elemento for elemento in emociones_detectadas)
 cantidad_enojo = sum("Enojo" in elemento for elemento in emociones_detectadas)
 cantidad_miedo = sum("Miedo" in elemento for elemento in emociones_detectadas)
-cantidad_desden = sum("Desden" in elemento for elemento in emociones_detectadas)
+cantidad_neutral = sum("Neutral" in elemento for elemento in emociones_detectadas)
 cantidad_sorpresa = sum("Sorpresa" in elemento for elemento in emociones_detectadas)
 cantidad_tristeza = sum("Tristeza" in elemento for elemento in emociones_detectadas)
 
@@ -151,8 +151,8 @@ with open("resumen_analisis.html", "w") as archivo:
     #canva
     archivo.write("<div style=\"width: 600px; height: 600px;\"><canvas id=\"myChart\" width=\"100px\" height=\"100px\"></canvas></div>")
     #Script del canva
-    archivo.write("<script>new Chart(document.getElementById(\"myChart\").getContext(\"2d\"),{type:\"pie\",data:{labels:[\"Alegria\",\"Desagrado\",\"Enojo\",\"Miedo\",\"Desden\",\"Sorpresa\",\"Tristeza\"],datasets:[{label:\"Resultados del analisis\",data:[")
-    archivo.write(str(cantidad_alegria) + "," + str(cantidad_desagrado) + "," + str(cantidad_enojo) + "," + str(cantidad_miedo) + "," + str(cantidad_desden) + "," + str(cantidad_sorpresa) + "," + str(cantidad_tristeza))
+    archivo.write("<script>new Chart(document.getElementById(\"myChart\").getContext(\"2d\"),{type:\"pie\",data:{labels:[\"Alegria\",\"Desagrado\",\"Enojo\",\"Miedo\",\"Neutral\",\"Sorpresa\",\"Tristeza\"],datasets:[{label:\"Resultados del analisis\",data:[")
+    archivo.write(str(cantidad_alegria) + "," + str(cantidad_desagrado) + "," + str(cantidad_enojo) + "," + str(cantidad_miedo) + "," + str(cantidad_neutral) + "," + str(cantidad_sorpresa) + "," + str(cantidad_tristeza))
     archivo.write("],backgroundColor:[\"#2196f3\",\"#4caf50\",\"#f44336\",\"#dc19fa\",\"#9e9e9e\",\"#ed6b00\",\"#3f51b5\"]}]}});</script>")
 
     #detalle
@@ -161,7 +161,7 @@ with open("resumen_analisis.html", "w") as archivo:
     archivo.write("<br><h3>Desagrado: {:.2f}%</h3>\n".format(cantidad_desagrado/total_registros*100))
     archivo.write("<br><h3>Enojo: {:.2f}%</h3>\n".format(cantidad_enojo/total_registros*100))
     archivo.write("<br><h3>Miedo: {:.2f}%</h3>\n".format(cantidad_miedo/total_registros*100))
-    archivo.write("<br><h3>Desden: {:.2f}%</h3>\n".format(cantidad_desden/total_registros*100))
+    archivo.write("<br><h3>Neutral: {:.2f}%</h3>\n".format(cantidad_neutral/total_registros*100))
     archivo.write("<br><h3>Sorpresa: {:.2f}%</h3>\n".format(cantidad_sorpresa/total_registros*100))
     archivo.write("<br><h3>Tristeza: {:.2f}%</h3>\n".format(cantidad_tristeza/total_registros*100))
     archivo.write("</div></div>\n\n")
