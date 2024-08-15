@@ -13,7 +13,7 @@ peopleList = os.listdir(dataPath)
 # Parameters
 img_size = (48, 48)
 batch_size = 32
-epochs = 100
+epochs = 120
 
 # Data preparation
 labels = []
@@ -63,7 +63,13 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 # Training
 model.fit(datagen.flow(faces_data, labels, batch_size=batch_size), epochs=epochs)
 
+# Obtener la ruta del directorio donde se encuentra el archivo actual
+current_directory = os.path.dirname(os.path.abspath(__file__))
+
+# Construir la ruta completa para guardar el modelo
+model_path = os.path.join(current_directory, "emotion_model.h5")
+
 # Save model
 model.save("emotion_model.h5")
 
-print("Model saved as emotion_model.h5")
+print("Modelo guardado como emotion_model.h5")
