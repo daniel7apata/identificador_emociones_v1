@@ -65,7 +65,7 @@ while True:
         minutes = int(elapsed_time // 60)
         seconds = int(elapsed_time % 60)
         milliseconds = int((elapsed_time * 1000) % 1000)
-        detected_emotions.append(f"{emotion} - {minutes:02}:{seconds:02}")
+        detected_emotions.append(f"{minutes:02}_{seconds:02}_{milliseconds:03} - {emotion}")
 
         # Recortar la región de interés (ROI) del fotograma
         roi = frame[y:y+h, x:x+w]
@@ -95,6 +95,6 @@ cap.release()
 cv2.destroyAllWindows()
 
 # Exportar las emociones detectadas a un archivo .txt
-with open("detected_emotions.txt", "w") as file:
+with open("emociones_detectadas.txt", "w") as file:
     for emotion in detected_emotions:
         file.write(emotion + "\n")
