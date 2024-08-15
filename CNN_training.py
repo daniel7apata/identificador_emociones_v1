@@ -7,7 +7,7 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 # Paths
-dataPath = "C:/Users/Daniel/Desktop/datos_entrenamiento"
+dataPath = os.path.join(os.getcwd(), "datos_entrenamiento")
 peopleList = os.listdir(dataPath)
 
 # Parameters
