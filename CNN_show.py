@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
 import time
+import os
 
 # Cargar el modelo entrenado
 model = load_model("emotion_model.h5")
@@ -20,6 +21,15 @@ detected_emotions = []
 
 # Iniciar el cronómetro
 start_time = time.time()
+
+# Obtener el directorio del archivo actual
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Crear la carpeta si no existe
+# Crear la carpeta "fotogramas_generados" en el mismo directorio que el archivo actual
+output_dir = os.path.join(current_dir, "fotogramas_generados")
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
 
 while True:
     # Leer un frame de la cámara
@@ -54,7 +64,18 @@ while True:
         elapsed_time = time.time() - start_time
         minutes = int(elapsed_time // 60)
         seconds = int(elapsed_time % 60)
+        milliseconds = int((elapsed_time * 1000) % 1000)
         detected_emotions.append(f"{emotion} - {minutes:02}:{seconds:02}")
+
+        # Recortar la región de interés (ROI) del fotograma
+        roi = frame[y:y+h, x:x+w]
+
+        # Formatear el nombre del archivo
+        filename = f"{minutes:02}_{seconds:02}_{milliseconds:03} - {emotion}.png"
+
+        # Guardar el fotograma clasificado (solo la ROI)
+        frame_path = os.path.join(output_dir, filename)
+        cv2.imwrite(frame_path, roi)
 
     # Mostrar el cronómetro en la esquina inferior derecha
     elapsed_time = time.time() - start_time
